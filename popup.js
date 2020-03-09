@@ -1,13 +1,20 @@
-function listenClick() {
-  const button = document.getElementById('get-name');
-  button.addEventListener('click', getText);
+chrome.browserAction.onClicked.addListener((tab) => {
+  chrome.tabs.executeScript({
+    code: "alert(window.getSelection().toString());"
+  });
+});
 
-  function getText(){
-    let selectedText = window.getSelection();
-    selectedText.toString;
-    console.log(selectedText)
-  };
-}
+
+// function listenClick() {
+//   const button = document.getElementById('get-name');
+//   button.addEventListener('click', getText);
+
+//   function getText(){
+//     let selectedText = window.getSelection();
+//     selectedText.toString;
+//     console.log(selectedText)
+//   };
+// }
 
 
 //     () => {
