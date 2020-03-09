@@ -6,7 +6,7 @@ chrome.browserAction.onClicked.addListener((tab) => {
 
 
 // function listenClick() {
-//   const button = document.getElementById('get-name');
+//   const button = document.querySelector('.get-name');
 //   button.addEventListener('click', getText);
 
 //   function getText(){
