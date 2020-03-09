@@ -19,5 +19,12 @@
   },
   "background": {
     "scripts": ["popup.js"]
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "htlm": ["modal.html"],
+      "js": ["scripts/modal.js"]
+    }
+  ]
 }
