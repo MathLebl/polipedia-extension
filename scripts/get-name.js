@@ -35,7 +35,7 @@ function getSelectText() {
   // formatting selection
   var formattedName = formatName(selectedText);
   //feching api response
-  var apiUrl = `http://localhost:3000/api/v1/politicians/${formattedName}`;
+  var apiUrl = `https://www.polipedia.fr/api/v1/politicians/${formattedName}`;
   var response = fetch(apiUrl)
   .then(response => response.json())
   .then((data) => {
