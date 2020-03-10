@@ -18,5 +18,19 @@
   },
   "background": {
     "scripts": ["popup.js"]
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://www.polipedia.fr/*",
+        "http://localhost:3000/*"
+      ],
+      "js": ["scripts/analyzeText-appendTags.js"],
+      "run_at": "document_end"
+    }
+  ]
 }

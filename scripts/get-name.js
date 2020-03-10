@@ -1,3 +1,4 @@
+// turn name to slug
 function formatName(name) {
   var separatedName = name.split(' ');
   var formatted = separatedName.map(function(nameParticle) {
@@ -7,6 +8,7 @@ function formatName(name) {
   return formatted.join('-');
 }
 
+// add interactivity to modal (close it with x button)
 function modalInteraction() {
   // Get the modal
   var modal = document.getElementById("polipediaModal");
@@ -28,8 +30,11 @@ function modalInteraction() {
 }
 
 function getSelectText() {
-  var selectedText = window.getSelection().toString();
+  // getting user selection and trimming whitespace
+  var selectedText = window.getSelection().toString().trim();
+  // formatting selection
   var formattedName = formatName(selectedText);
+  //feching api response
   var apiUrl = `http://localhost:3000/api/v1/politicians/${formattedName}`;
   var response = fetch(apiUrl)
   .then(response => response.json())
@@ -41,9 +46,11 @@ function getSelectText() {
 
 
 async function insertModal() {
+  // awaiting api reponse
   var apiData = await getSelectText();
-  var daysSinceBeginning = (Date.now() - Date.parse(apiData.mandate_begin_date)) / (1000*60*60*24)
-  var body = document.querySelector('body')
+  var userSelection = window.getSelection().toString().trim();
+  var daysSinceBeginning = (Date.now() - Date.parse(apiData.mandate_begin_date)) / (1000*60*60*24);
+  var body = document.querySelector('body');
   var modalStyle = `<style>
 
   .modal-container {
@@ -59,11 +66,11 @@ async function insertModal() {
 
   .modal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
+    margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-    min-height: 50vh;
+    width: 80%;
+    min-height: 30vh;
     text-align: center;
     border-radius: 20px;
   }
@@ -80,28 +87,34 @@ async function insertModal() {
     text-decoration: none;
     cursor: pointer;
   }
+
+  #polipediaLink {
+    transition: transform 0.3s ease;
+  }
+
+  #polipediaLink:hover {
+    transform: scale(2);
+  }
   </style>`
 
-  body.insertAdjacentHTML('afterbegin',
-    `${modalStyle}
-    <div id="polipediaModal" class="modal-container">
-    <div class="modal-content">
-    <span id="closePolipediaModal">&times;</span>
-    <img src="${apiData.photo}" height="100">
-    <h1>${apiData.name}</h1>
-    <h2>${apiData.group}</h2>
-    <p>Profession: ${apiData.profession}</p>
-    <p>a voté ${apiData.votes} depuis le ${apiData.mandate_begin_date} (soit ${Math.round((apiData.votes / daysSinceBeginning) * 100) / 100 } votes/jour)</p>
-    </div>
-    </div>
-    `)
-  modalInteraction();
-}
-
-function readAnalyzeDocumentText() {
-  const docText = document.querySelector('body').innerText;
-  docText
-  console.log(docText);
-}
+  // inserting modal in HTML
+  if (userSelection === "") {
+    console.log('Empty selection!')
+  } else {
+    body.insertAdjacentHTML('afterbegin',
+      `${modalStyle}
+      <div id="polipediaModal" class="modal-container">
+      <div class="modal-content">
+      <span id="closePolipediaModal">&times;</span>
+      <img src="${apiData.photo}" height="100">
+      <h1>${apiData.name}</h1>
+      <h2>${apiData.group}</h2>
+      <p>Profession: ${apiData.profession}</p>
+      <p>a voté ${apiData.votes} fois depuis le ${apiData.mandate_begin_date} (soit ${Math.round((apiData.votes / daysSinceBeginning) * 100) / 100 } votes/jour)</p>
+      <a href="http://localhost:3000${apiData.polipedia_link}" id="polipediaLink">See on Polipedia</a>
+      </div>
+      </div>`);
+    modalInteraction();}
+  }
 
 insertModal();
