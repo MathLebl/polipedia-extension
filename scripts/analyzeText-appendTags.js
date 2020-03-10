@@ -19,7 +19,8 @@ async function readAnalyzeDocumentText() {
   var politiciansNames = await getPoliticiansName();
   // turning names list into normalized array of names
   var namesArray = politiciansNames.map(function(hash) {
-    return hash.name.normalize('NFD').replace(/[\u0300-\u036f]/g, ""); });
+    return hash.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+  });
   var namesInDoc = [];
   namesArray.forEach(function(name) {
     if(normalizedDocText.includes(name)) {
