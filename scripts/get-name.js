@@ -1,7 +1,3 @@
-function readDocumentText() {
-  const docText = document.querySelector('body').text;
-}
-
 function formatName(name) {
   var separatedName = name.split(' ');
   var formatted = separatedName.map(function(nameParticle) {
@@ -45,13 +41,13 @@ function getSelectText() {
 
 
 async function insertModal() {
-  let apiData = await getSelectText();
-  console.log(apiData);
+  var apiData = await getSelectText();
+  var daysSinceBeginning = (Date.now() - Date.parse(apiData.mandate_begin_date)) / (1000*60*60*24)
   var body = document.querySelector('body')
   var modalStyle = `<style>
 
   .modal-container {
-    z-index: 1;
+    z-index: 50;
     position: fixed;
     background-color: rgba(0,0,0,0.4);
     left: 0;
@@ -69,6 +65,7 @@ async function insertModal() {
     width: 80%; /* Could be more or less, depending on screen size */
     min-height: 50vh;
     text-align: center;
+    border-radius: 20px;
   }
 
   #closePolipediaModal {
@@ -94,10 +91,17 @@ async function insertModal() {
     <h1>${apiData.name}</h1>
     <h2>${apiData.group}</h2>
     <p>Profession: ${apiData.profession}</p>
+    <p>a voté ${apiData.votes} depuis le ${apiData.mandate_begin_date} (soit ${Math.round((apiData.votes / daysSinceBeginning) * 100) / 100 } votes/jour)</p>
     </div>
     </div>
     `)
   modalInteraction();
+}
+
+function readAnalyzeDocumentText() {
+  const docText = document.querySelector('body').innerText;
+  docText
+  console.log(docText);
 }
 
 insertModal();
