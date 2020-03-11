@@ -1,7 +1,7 @@
 {
   "name": "Polipédia chrome extension",
   "version": "1.0",
-  "description": "Build an Extension!",
+  "description": "L'extension officielle de polipedia.fr",
   "manifest_version": 2,
   "permissions": [
     "activeTab"
@@ -26,8 +26,10 @@
         "https://*/*"
       ],
       "exclude_matches": [
+        "http://www.polipedia.fr/*",
         "https://www.polipedia.fr/*",
-        "http://localhost:3000/*"
+        "http://localhost:3000/*",
+        "https://www.google.com/*"
       ],
       "js": ["scripts/analyzeText-appendTags.js"],
       "run_at": "document_end"
