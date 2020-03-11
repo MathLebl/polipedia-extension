@@ -17,7 +17,7 @@
     "128": "images/favicon.png"
   },
   "background": {
-    "scripts": ["popup.js"]
+    "scripts": ["execute.js"]
   },
   "content_scripts": [
     {
