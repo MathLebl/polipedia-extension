@@ -4,7 +4,8 @@
   "description": "L'extension officielle de polipedia.fr",
   "manifest_version": 2,
   "permissions": [
-    "activeTab"
+    "activeTab",
+    "contextMenus"
   ],
   "browser_action": {
     "default_icon": "images/favicon.png",
