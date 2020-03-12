@@ -29,9 +29,11 @@ async function readAnalyzeDocumentText() {
     });
   var namesInDoc = [];
   namesArray.forEach(function(hash) {
-    if(normalizedDocText.includes(hash['formattedName'])) {
+    if(docText.includes(hash['normalName'])) {
       namesInDoc.push(hash['normalName']);
-    }
+    } else if(normalizedDocText.includes(hash['formattedName'])) {
+      namesInDoc.push(hash['formattedName']);
+    };
   })
   var styleTags = `<style>
   .polipediaName {
@@ -44,12 +46,15 @@ async function readAnalyzeDocumentText() {
   }
   </style>`;
   document.querySelector('body').insertAdjacentHTML('afterbegin', styleTags);
+  console.log(namesInDoc);
+  var n = 1
   namesInDoc.forEach(function(name) {
     regex = new RegExp(name, "g");
-    var nameWithTags = `<span class="polipediaName" title="Découvrir sur Polipedia">${name}</span>`
+    var nameWithTags = `<span class="polipediaName" id ="polipediaName${n}" title="Découvrir sur Polipedia">${name}</span>`
     document.querySelector('body').innerHTML = document.querySelector('body').innerHTML.replace(regex, nameWithTags);
+    n++;
   })
-}
+};
 
 readAnalyzeDocumentText();
 console.log('Done')
@@ -71,5 +76,3 @@ console.log('Done')
 // }
 
 // addTippy();
-
-
