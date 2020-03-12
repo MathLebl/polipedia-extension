@@ -28,7 +28,6 @@
       ],
       "exclude_matches": [
         "http://www.polipedia.fr/*",
-        "https://www.polipedia.fr/*",
         "http://localhost:3000/*",
         "https://www.google.com/*"
       ],

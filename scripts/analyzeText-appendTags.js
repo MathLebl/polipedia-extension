@@ -89,5 +89,3 @@ window.addEventListener('load', function () {
 // }
 
 // addTippy();
-
-
