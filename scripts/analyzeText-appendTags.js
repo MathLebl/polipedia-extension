@@ -1,5 +1,3 @@
-console.log('reading file')
-
 // get Names List from API
 function getPoliticiansName() {
   // getting names list
@@ -29,9 +27,11 @@ async function readAnalyzeDocumentText() {
     });
   var namesInDoc = [];
   namesArray.forEach(function(hash) {
-    if(normalizedDocText.includes(hash['formattedName'])) {
+    if(docText.includes(hash['normalName'])) {
       namesInDoc.push(hash['normalName']);
-    }
+    } else if(normalizedDocText.includes(hash['formattedName'])) {
+      namesInDoc.push(hash['formattedName']);
+    };
   })
   var styleTags = `<style>
   .polipediaName {
@@ -44,15 +44,33 @@ async function readAnalyzeDocumentText() {
   }
   </style>`;
   document.querySelector('body').insertAdjacentHTML('afterbegin', styleTags);
+  var n = 1
   namesInDoc.forEach(function(name) {
     regex = new RegExp(name, "g");
-    var nameWithTags = `<span class="polipediaName" title="Découvrir sur Polipedia">${name}</span>`
+    var nameWithTags = `<span class="polipediaName" id ="polipediaName${n}" title="Découvrir sur Polipedia">${name}</span>`
     document.querySelector('body').innerHTML = document.querySelector('body').innerHTML.replace(regex, nameWithTags);
+    n++;
   })
-}
+};
 
 readAnalyzeDocumentText();
-console.log('Done')
+
+function selectSpan(event) {
+
+  var el = event.currentTarget;
+  var range = document.createRange();
+  range.selectNodeContents(el);
+  var sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+};
+
+window.addEventListener('load', function () {
+  var polipediaClass = document.getElementsByClassName('polipediaName');
+  for (let i = 0; i < polipediaClass.length ; i++) {
+    polipediaClass[i].addEventListener('click', selectSpan);
+  };
+});
 
 // Functions below are supposed to implement 'tippy.js' to create a tooltip around the politician names - need to implement it with webpack
 
