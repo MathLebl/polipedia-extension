@@ -3,3 +3,12 @@ chrome.browserAction.onClicked.addListener((tab) => {
     file: 'scripts/get-name.js'
   });
 });
+
+chrome.contextMenus.create({
+  title: "Polipedia Info",
+  contexts:["selection"],
+});
+
+chrome.contextMenus.onClicked.addListener(() => {
+  alert('Coming soon ...')
+})
