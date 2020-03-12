@@ -6,7 +6,7 @@ chrome.browserAction.onClicked.addListener((tab) => {
 
 chrome.contextMenus.create({
   title: "Polipedia Info",
-  contexts:["selection"],
+  contexts:["selection"]
 });
 
 chrome.contextMenus.onClicked.addListener(() => {
