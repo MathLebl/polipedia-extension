@@ -30,7 +30,8 @@
         "http://www.polipedia.fr/*",
         "https://www.polipedia.fr/*",
         "http://localhost:3000/*",
-        "https://www.google.com/*"
+        "https://www.google.com/*",
+        "https://www.nosdeputes.fr/*"
       ],
       "js": ["scripts/analyzeText-appendTags.js"],
       "run_at": "document_end"

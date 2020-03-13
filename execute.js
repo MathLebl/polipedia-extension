@@ -10,5 +10,5 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.onClicked.addListener(() => {
-  alert('Coming soon ...')
+  alert('Coming soon...');
 })
