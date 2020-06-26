@@ -3,10 +3,10 @@ function getPoliticiansName() {
   // getting names list
   var namesApiUrl = 'https://www.polipedia.fr/api/v1/politicians/';
   var response = fetch(namesApiUrl)
-  .then(response => response.json())
-  .then((data) => {
-    return data
-  });
+    .then(response => response.json())
+    .then((data) => {
+      return data
+    });
   return response
 }
 
@@ -20,16 +20,17 @@ async function readAnalyzeDocumentText() {
   var normalizedDocText = docText.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
   var politiciansNames = await getPoliticiansName();
   // turning names list into normalized array of names
-  var namesArray = politiciansNames.map(function(hash) {
+  var namesArray = politiciansNames.map(function (hash) {
     return {
       normalName: hash.name,
-      formattedName: hash.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "")}
-    });
+      formattedName: hash.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "")
+    }
+  });
   var namesInDoc = [];
-  namesArray.forEach(function(hash) {
-    if(docText.includes(hash['normalName'])) {
+  namesArray.forEach(function (hash) {
+    if (docText.includes(hash['normalName'])) {
       namesInDoc.push(hash['normalName']);
-    } else if(normalizedDocText.includes(hash['formattedName'])) {
+    } else if (normalizedDocText.includes(hash['formattedName'])) {
       namesInDoc.push(hash['formattedName']);
     };
   })
@@ -45,7 +46,7 @@ async function readAnalyzeDocumentText() {
   </style>`;
   document.querySelector('body').insertAdjacentHTML('afterbegin', styleTags);
   var n = 1
-  namesInDoc.forEach(function(name) {
+  namesInDoc.forEach(function (name) {
     regex = new RegExp(name, "g");
     var nameWithTags = `<span class="polipediaName" id ="polipediaName${n}" title="Découvrir sur Polipedia">${name}</span>`
     document.querySelector('body').innerHTML = document.querySelector('body').innerHTML.replace(regex, nameWithTags);
@@ -67,7 +68,7 @@ function selectSpan(event) {
 
 window.addEventListener('load', function () {
   var polipediaClass = document.getElementsByClassName('polipediaName');
-  for (let i = 0; i < polipediaClass.length ; i++) {
+  for (let i = 0; i < polipediaClass.length; i++) {
     polipediaClass[i].addEventListener('click', selectSpan);
   };
 });
